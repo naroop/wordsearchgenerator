@@ -101,28 +101,28 @@ def placeWord(wordsearch, pos, direction, word):
     return wordsearch
 
 # This will determine all valid starting coordinates for a given word
-# Returns a dickionary containing all valid start coords and a list containing their possible directions.
+# Returns a dictionary containing all valid start coords and a list containing their possible directions.
 def findValidStarts(wordsearch, word):
-    dick = {}
+    d = {}
     for row in range(0, 12):
         for col in range(0, 12):
             startPos = (col, row)
             directions = []
             if searchH(startPos, word, wordsearch) == True:
                 directions.append("H")
-                dick[startPos] = directions
+                d[startPos] = directions
             if searchV(startPos, word, wordsearch) == True:
                 directions.append("V")
-                dick[startPos] = directions
+                d[startPos] = directions
             if searchDD(startPos, word, wordsearch) == True:
                 directions.append("DD")
-                dick[startPos] = directions
+                d[startPos] = directions
             if searchUD(startPos, word, wordsearch) == True:
                 directions.append("UD")
-                dick[startPos] = directions
-    if len(dick) == 0:
+                d[startPos] = directions
+    if len(d) == 0:
         print("There were no valid locations.")
-    return dick
+    return d
 
 # Returns a tuple containing the start position and the direction chosen.
 def getRandomPositionAndDirection(validStarts):
@@ -178,9 +178,9 @@ def generateWordSearch():
     words = reverseSomeWords(words)
     errorWords = []
     for i in range(len(words)): # Then, we loop through each word and place it in the word search
-        dick = findValidStarts(wordsearch, words[i]) # We find all valid starting points of a given word
+        d = findValidStarts(wordsearch, words[i]) # We find all valid starting points of a given word
         try: # Find valid starts could generate an empty list. In this case, we stop at the given word, print we were unable to do it and have the user rerun.
-            posAndDir = riggedRandom(dick) # We get a random postion and an associated random direction
+            posAndDir = riggedRandom(d) # We get a random postion and an associated random direction
             placeWord(wordsearch, posAndDir[0], posAndDir[1], words[i]) # We place the word in the word search
         except IndexError:
             print("Couldn't place word %s. Try re-running!" %(words[i]))
